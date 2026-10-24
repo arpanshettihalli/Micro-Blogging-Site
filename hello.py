@@ -15,5 +15,11 @@ def login():
 @app.route('/logout')
 def logout():
     return '<h1>Hello World!<h1>'
+@app.errorhandler(404)
+def page_not_found(e):
+    return '<h1>Hello World!<h1>'
+@app.errorhandler(500)
+def server_error(e):
+    return '<h1>Hello World!<h1>'
 if __name__ == '__main__':
     app.run(debug=True)
