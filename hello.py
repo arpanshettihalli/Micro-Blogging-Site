@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import request
-from flask import current_app
+from flask import current_app,g
 app = Flask(__name__)
 @app.route('/post/<int:post_id>')
 def post(post_id):
@@ -30,5 +30,12 @@ def user():
     name = request.args.get('name')
     print('method=',request.method)
     return '<h1>Hello {}!<h1>'.format(name)
+@app.before_request
+def load_user():
+    g.user = 'Rithul'
+
+@app.route('/profile')
+def profile():
+    return '<hi>Profile {}</hi>'.format(g.user)
 if __name__ == '__main__':
     app.run(debug=True)
