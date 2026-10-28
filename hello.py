@@ -1,10 +1,12 @@
 from flask import Flask
 from flask import request
-from flask import current_app,g,make_response,redirect
+from flask import current_app,g,make_response,redirect,abort
 
 app = Flask(__name__)
 @app.route('/post/<int:post_id>')
 def post(post_id):
+    if post_id == 1:
+        abort(404)
     return '<h1>Hello {}!<h1>'.format(post_id)
 @app.route('/login')
 def login():
@@ -12,13 +14,6 @@ def login():
 @app.route('/logout')
 def logout():
     return '<h1>Hello World!<h1>'
-@app.errorhandler(404)
-def page_not_found(e):
-    return '<h1>Hello World!<h1>'
-@app.errorhandler(500)
-def server_error(e):
-    return '<h1>Hello World!<h1>'
-
 @app.route('/')
 def index():
     user_agent = request.headers.get('User-Agent')
@@ -46,5 +41,8 @@ def cookie():
 @app.route('/happyfappy')
 def happyfappy():
     return redirect('https://www.happyfappy.net/')
+@app.route('/test')
+def test():
+    abort(404)
 if __name__ == '__main__':
     app.run(debug=True)
