@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
-from flask import current_app,g
+from flask import current_app,g,make_response,redirect
+
 app = Flask(__name__)
 @app.route('/post/<int:post_id>')
 def post(post_id):
@@ -37,5 +38,13 @@ def load_user():
 @app.route('/profile')
 def profile():
     return '<hi>Profile {}</hi>'.format(g.user)
+@app.route('/cookie')
+def cookie():
+    response = make_response('<hi>This site contains cookie</h1>')
+    response.set_cookie('name', 'Rithul')
+    return response
+@app.route('/happyfappy')
+def happyfappy():
+    return redirect('https://www.happyfappy.net/')
 if __name__ == '__main__':
     app.run(debug=True)
